@@ -126,7 +126,8 @@ Description: This endpoint allows the creation of a new user by providing necess
  
 
 | **Status Code** | **Error Message** | **Description** | 
-|------------------|---------------------|----------------------------------------------------------------| 
+|------------------|---------------------|----------------------------------------------------------------|
+| **200** | `Success` | User created succesfully. |  
 | **400** | `Bad Request` | The request was malformed or missing required parameters. | 
 | **409** | `Conflict` | User with this email already registered| 
 
@@ -152,8 +153,8 @@ Description This route enables users to log in by providing their email and pass
 
 | **Status Code** | **Error Message** | **Description** | 
 |------------------|---------------------|----------------------------------------------------------------| 
+| **200** | `Success` | The request was succesfuul, user is loged in the system. | 
 | **400** | `Bad Request` | The request was malformed or missing required parameters. | 
-| **401** | ` Unauthorized` |Authentication failed; invalid credentials provided or user is suspended | 
 | **401** | ` Unauthorized` |Authentication failed; invalid credentials provided or user is suspended | 
 
 
@@ -179,6 +180,7 @@ appleAuth($input: AppleAuth!) {
  ```
 | **Status Code** | **Error Message** | **Description** | 
 |------------------|---------------------|----------------------------------------------------------------| 
+| **200** | `Success` | Request was successful, user is regsitered and redirected into system.| 
 | **401** | `Unauthorized` | User email and token are not for the same account| 
 | **401** | ` Unauthorized` |The identity token is invalid or could not be verified. | 
 | **404** | ` Not found` |No user was found with the provided identifier (sub from the decoded token). | 
@@ -206,7 +208,8 @@ googleAuth($input: GoogleAuthInput!) {
 ```
 
 | **Status Code** | **Error Message** | **Description** | 
-|------------------|---------------------|----------------------------------------------------------------| 
+|------------------|---------------------|----------------------------------------------------------------|
+| **200** | `Success` | Request was successful, user is regsitered and redirected into system.| 
 | **400** | `error verifying google idToken email:<user.email>` |The Google ID token could not be verified.| 
 | **401** | ` Unauthorized` |The token and user ID do not match or do not correspond to the same user. | 
 | **500** | `error creating google user with email:<user.email>` |A failure occurred while creating a new Google user account. | 
