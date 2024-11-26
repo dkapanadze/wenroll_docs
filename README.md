@@ -110,7 +110,8 @@ Ensure the PostgreSQL database is running and the connection parameters are corr
 Description: This endpoint allows the creation of a new user by providing necessary information like email, password, first name, and lastname. It registers the user and sends an invitation email with a temporary password. 
 
 #### Request Body 
-``` mutation createUser($input: SignUpInput!){
+```
+ mutation createUser($input: SignUpInput!){
 	 createUser(input: $input){
 		...UserFragment 
 		 } 
