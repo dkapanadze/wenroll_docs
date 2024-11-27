@@ -1125,7 +1125,7 @@ query getTransactions($currentPage: Int!, $perPage: Int!, $fetchAll: Boolean!) {
 
 | **Status Code** | **Error Message**         | **Description**                                                 |
 |------------------|---------------------------|-----------------------------------------------------------------|
-| **200**          | `Bad Request`             |trasaction retrieved successfuly |
+| **200**          | `success`             |trasaction retrieved successfuly |
 | **400**          | `Bad Request`             | Invalid parameters passed, such as missing or invalid `currentPage` or `perPage`. |
 | **500**          | `Internal Server Error`   | An error occurred while processing the request.                |
 
@@ -1149,27 +1149,254 @@ This query retrieves a list of transactions with pagination support. You can spe
 ```graphql
 query getTransactions($currentPage: Int!, $perPage: Int!, $fetchAll: Boolean!) {
   getTransactions(currentPage: $currentPage, perPage: $perPage, fetchAll: $fetchAll) {
-    items {
-      orderId
-      userId
-      status
-      transactionId
-      amount
-      paymentMethod
-      statusDescription
-      subscriptionId
-      transactionType
-    }
-    totalCount
+    currentPage,
+  totalPages, 
+  totalCount,
+  data{
+	...TransactionFragment
   }
 }
 ```
 
 | **Status Code** | **Error Message**         | **Description**                                                 |
 |------------------|---------------------------|-----------------------------------------------------------------|
-| **200**          | `Bad Request`             |trasactions retrieved successfully |
+| **200**          | `success`             |trasactions retrieved successfully |
 | **400**          | `Bad Request`             | Invalid parameters passed, such as missing or invalid `currentPage` or `perPage`. |
 | **500**          | `Internal Server Error`   | An error occurred while processing the request.  |
+
+
+
+### Topics Module
+
+#### Mutation: `addTopic(moduleId: String, input: TopicInput): Module`
+
+#### Description
+The addTopic mutation allows adding a new topic to a specified module. It creates a topic within the system, associates it with the given module, and updates the module with the newly created topic.
+This mutation is restricted to users with specific roles, such as `SUPER_ADMIN` and `ADMIN`.
+
+#### Features
+- **Role-Based Access Control**: Only users with the SUPER_ADMIN or ADMIN role can execute this mutation.
+- **Validation**: Ensures input conforms to defined constraints using a validation pipe.
+- **Create Topic**: Adds a new topic to a module using the provided moduleId and TopicInput.
+- **Associate Topic**: Links the created topic with the specified module.
+
+
+#### Request Body
+
+```graphql
+mutation addTopic($moduleId: String!, $input: TopicInput!) {
+  addTopic(moduleId: $moduleId, input: $input) {
+   ...moduleFragment
+  }
+}
+```
+
+| **Status Code** | **Error Message**         | **Description**                                                 |
+|------------------|---------------------------|-----------------------------------------------------------------|
+| **200**          | `success`             |trasactions retrieved successfully |
+| **400**          | `Bad Request`             | Invalid parameters passed, such as missing or invalid `currentPage` or `perPage`. |
+| **500**          | `Internal Server Error`   | An error occurred while processing the request.  |
+
+
+
+#### Query: `topic(topicId: String!): Topic`
+
+#### Description
+The topic query retrieves the details of a specific topic by its unique ID. It includes information about the topic and its associated lessons, sorted in ascending order based on their orderIndex.
+This query is accessible to users with roles such as SUPER_ADMIN, ADMIN, COACH, and STUDENT.
+
+
+#### Features
+- **Role-Based Access Control**: Restricts access to specific roles (SUPER_ADMIN, ADMIN, COACH, STUDENT).
+- **Retrieve Topic Details**: Fetches a topic by its ID from the database.
+- **Lesson Sorting**: Ensures lessons within the topic are returned in ascending order of their orderIndex.
+- **Error Handling**: Returns meaningful error messages when the topic is not found or other issues occur.
+
+#### Request Body
+
+```graphql
+query getTopic($topicId: String!) {
+  topic(topicId: $topicId) {
+    topic
+  }
+}
+
+```
+
+| **Status Code** | **Error Message**         | **Description**                                                 |
+|------------------|---------------------------|-----------------------------------------------------------------|
+| **200**          | `success`             |topic retrieved successfully |
+| **403**          | `Unauthorized`             | The user does not have the required permissions.|
+| **500**          | `Internal Server Error`   | An unexpected error occurred during the operation.|
+
+
+#### Mutation: `deleteTopics(moduleId: String, topicIds: [String]): Module`
+
+#### Description
+The deleteTopics mutation allows authorized users to delete multiple topics from a specific module by providing the moduleId and a list of topicIds. It returns the updated module after the topics have been deleted.
+This mutation is accessible only to users with the roles SUPER_ADMIN or ADMIN.
+
+
+#### Features
+- **Batch Deletion**: Removes multiple topics at once based on the provided topicIds.
+- **RBAC Enforcement**: Ensures only users with roles like SUPER_ADMIN and ADMIN can perform this action.
+- **Modular Integrity**: Operates within the context of a specific module, identified by its moduleId.
+
+
+#### Request Body
+
+```graphql
+mutation deleteTopics($moduleId: String!, $topicIds: [String]!) {
+  deleteTopics(moduleId: $moduleId, topicIds: $topicIds) {
+   module
+  }
+}
+```
+
+| **Status Code** | **Error Message**         | **Description**                                                 |
+|------------------|---------------------------|-----------------------------------------------------------------|
+| **200**          | `success`             |topic deleted successfully |
+| **400**          | `Topic IDs invalid	`             | One or more topicIds are not valid.|
+| **403**          | `Unauthorized`   | The user does not have the required permissions.|
+
+
+
+### Lessons Module
+
+#### Mutation: `createLesson(topicId: String, input: LessonInput): Topic`
+
+#### Description
+The createLesson mutation allows authorized users to add a new lesson to a specific topic by providing a topicId and lesson details through the input object. The response includes the updated topic containing the newly created lesson.
+This mutation is accessible to users with the SUPER_ADMIN or ADMIN roles.
+
+
+#### Features
+- **Lesson Creation**: Adds a new lesson to the specified topic.
+- **Rich Text Formatting**: Converts the description and transcript fields into a JSON structure compatible with the Draft.js format.
+- **Video Association**: Associates a video with the lesson if provided.
+- **RBAC Enforcement**: Restricts access to authorized roles only.
+
+
+#### Request Body
+
+```graphql
+mutation createLesson($topicId: String!, $input: LessonInput!) {
+  createLesson(topicId: $topicId, input: $input) {
+	topic
+  }
+}
+
+```
+
+| **Status Code** | **Error Message**         | **Description**                                                 |
+|------------------|---------------------------|-----------------------------------------------------------------|
+| **200**          | `Success`             |Lesson created successfully |
+| **400**          | `Topic not found`         | The specified topicId does not exist.|
+| **400**          | `Invalid input data`      | The provided lesson details are invalid or incomplete.|
+| **403**          | `Unauthorized`   | The user does not have the required permissions.|
+
+
+#### Query: `getLessons(topicId: String): [Lesson]`
+
+#### Description
+The getLessons query retrieves all lessons associated with a specific topic. This endpoint supports role-based access control (RBAC) and allows authorized users to fetch lesson details by providing the topicId.
+This query is accessible to users with the roles: SUPER_ADMIN, ADMIN, COACH, and STUDENT.
+
+#### Features
+- **Lesson Retrieval:**: Fetches all lessons linked to the specified topic.
+- **RBAC Enforcement**:  Ensures that only authorized users can access this endpoint.
+
+#### Request Body
+```graphql
+query getLessons($topicId: String!) {
+  getLessons(topicId: $topicId) {
+ lesson
+}
+```
+
+
+| **Status Code** | **Error Message**         | **Description**                                                 |
+|------------------|---------------------------|-----------------------------------------------------------------|
+| **200**          | `Success`             |Lessons retraved successfully |
+| **400**          | `Topic not found`         | The specified topicId does not exist.|
+| **403**          | `Unauthorized`   | The user does not have the required permissions.|
+
+
+#### Query: `getLessonById(lessonId: String, courseId: String): Lesson`
+
+#### Description
+The getLessonById query retrieves the details of a specific lesson based on its lessonId and optionally filters by courseId. This endpoint is accessible to users with the roles SUPER_ADMIN, ADMIN, COACH, and STUDENT.
+
+#### Features
+- **Lesson Retrieval by ID**: Fetches a single lesson using its unique identifier.
+- **Course Association**:  Optionally checks the lesson's association with the specified courseId.
+- **RBAC Enforcement:**: Ensures only authorized users can access lesson details.
+
+#### Request Body
+```graphql
+query getLessonById($lessonId: String!, $courseId: String) {
+  getLessonById(lessonId: $lessonId, courseId: $courseId) {
+   	lesson
+  }
+}
+```
+
+| **Status Code** | **Error Message**         | **Description**                                                 |
+|------------------|---------------------------|-----------------------------------------------------------------|
+| **200**          | `Success`             |Lessons retraved successfully |
+| **400**          | `Topic not found`         | The specified topicId does not exist.|
+| **403**          | `Unauthorized`   | The user does not have the required permissions.|
+
+
+#### Mutation: `editLesson(topicId: String, lessonId: String, input: LessonInput): Lesson`
+
+#### Description
+The editLesson mutation updates the details of a specific lesson based on its lessonId within the context of the provided topicId. It allows modification of various lesson attributes and ensures that only authorized users can perform this action.
+
+#### Features
+- **Update Lesson Details**: Modify lesson attributes such as name, description, transcript, or video details.
+- **RBAC Enforcement**: Restricts access to SUPER_ADMIN and ADMIN roles.
+- **Partial Updates**:Accepts partial data for updating only the necessary fields of a lesson.
+
+#### Request Body
+```graphql
+mutation editLesson($topicId: String!, $lessonId: String!, $input: LessonInput!) {
+  editLesson(topicId: $topicId, lessonId: $lessonId, input: $input) {
+  	lesson
+  }
+}
+```
+
+| **Status Code** | **Error Message**         | **Description**                                                 |
+|------------------|---------------------------|-----------------------------------------------------------------|
+| **200**          | `Success`             |Lessons edited successfully |
+| **404**          | `Lesson not found`         | The specified lessonId does not exist.|
+| **403**          | `Unauthorized`   | The user does not have the required permissions.|
+
+
+#### Mutation: `changeLessonsOrder(draggedId: String!, droppedId: String!): String`
+
+#### Description
+The changeLessonsOrder mutation changes the order of lessons within a specific topic. The mutation moves a lesson (draggedId) to a new position (droppedId). It allows users with SUPER_ADMIN or ADMIN roles to re-arrange lessons by adjusting their orderIndex values.
+
+
+#### Features
+- **Reorder Lessons**: Updates the order of lessons within a specific topic.
+- **RBAC Enforcement**: Only accessible by users with SUPER_ADMIN or ADMIN roles.
+- **Partial Updates**: Updates all lessons' orderIndex values in parallel to maintain the new order.
+
+#### Request Body
+```graphql
+mutation changeLessonsOrder($draggedId: String!, $droppedId: String!) {
+  changeLessonsOrder(draggedId: $draggedId, droppedId: $droppedId)
+}
+```
+
+| **Status Code** | **Error Message**         | **Description**                                                 |
+|------------------|---------------------------|-----------------------------------------------------------------|
+| **200**          | `Success`             |Lessons order edited successfully |
+| **400**          | `Dragged lesson or topic not found`         |The dragged lesson or its associated topic does not exist.|
+| **400**          | `Lessons not found in the topic`         |Either the dragged or dropped lesson could not be found in the topic.|
 
 
 6. Testing
