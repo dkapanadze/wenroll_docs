@@ -1399,6 +1399,58 @@ mutation changeLessonsOrder($draggedId: String!, $droppedId: String!) {
 | **400**          | `Lessons not found in the topic`         |Either the dragged or dropped lesson could not be found in the topic.|
 
 
+### Video Module
+
+#### REST Endpoint: ` POST  videos/convert`
+
+#### Description
+This endpoint triggers a video conversion process by sending a request to an external video converter service. It requires the videoKey as part of the request body, which represents the name or identifier of the video to be converted.
+
+
+#### Features
+- **JWT Authentication**: Ensures that only authenticated users can trigger the video conversion process.
+- **Validation**: The request body is validated using ValidationPipe to ensure proper data structure.
+
+
+| **Status Code** | **Error Message**         | **Description**                                                 |
+|------------------|---------------------------|-----------------------------------------------------------------|
+| **200**          | `Success`             |Video converted successfully |
+| **400**          | `Video file not found`         |The video specified by videoKey could not be found.|
+| **401**          | `Unauthorized`         |The request did not include a valid JWT token.|
+
+
+#### REST Endpoint: ` POST videos/conversion-success`
+
+#### Description
+This endpoint updates the status of a video's conversion once the conversion process is successful. It requires the videoKey and duration as part of the request body. The server then updates the video details, marking it as converted and possibly updating the video's duration if it's a lesson video.
+
+#### Features
+- **Validation**: The request body is validated using ValidationPipe to ensure proper data structure.
+- **Conversion Status Update**: Marks the video's links as converted and updates the video duration if it's related to a lesson.
+- **Conversion Status Update**: Marks the video's links as converted and updates the video duration if it's related to a lesson.
+
+
+| **Status Code** | **Error Message**         | **Description**                                                 |
+|------------------|---------------------------|-----------------------------------------------------------------|
+| **200**          | `Success`             |<video.key> |
+| **400**          | `Video not found`         |The video specified by videoKey could not be found.|
+
+#### REST Endpoint: ` POST videos/check-video-conversion-status`
+
+#### Description
+This endpoint checks the conversion status of a video by its link. It verifies whether all associated video links have been converted successfully. If the video is not found, it returns an error message.
+
+#### Features
+- **Authentication**: The request is protected by JWT authentication.
+- **Validation**: The request body is validated to ensure it contains the correct videoLink.
+- **Conversion Status Check**: Checks if all links associated with the video have been converted.
+
+
+| **Status Code** | **Error Message**         | **Description**                                                 |
+|------------------|---------------------------|-----------------------------------------------------------------|
+| **200**          | `Success`             | <Boolean> |
+| **400**          | `Video not found`         |The video specified by videoKey could not be found.|
+
 6. Testing
 ### Unit Tests
 Run unit tests for the back-end:
