@@ -887,6 +887,9 @@ mutation updateSubscriptionNextPaymentDate($userId: String!, $subscriptionId: St
 
 
 
+
+
+
 ### Query: getActiveSubscriptions: [Subscriptions]
 
 **Description**: This query retrieves a list of active subscriptions, which includes subscriptions that are either "SUBSCRIBED" or "ON_HOLD" and have a `nextPaymentDate` that is less than or equal to the current date. The result excludes any subscriptions with a `null` `originalTransactionId`.
@@ -1162,8 +1165,11 @@ query getTransactions($currentPage: Int!, $perPage: Int!, $fetchAll: Boolean!) {
 }
 ```
 
-
-
+| **Status Code** | **Error Message**         | **Description**                                                 |
+|------------------|---------------------------|-----------------------------------------------------------------|
+| **200**          | `Bad Request`             |trasactions retrieved successfully |
+| **400**          | `Bad Request`             | Invalid parameters passed, such as missing or invalid `currentPage` or `perPage`. |
+| **500**          | `Internal Server Error`   | An error occurred while processing the request.  |
 
 
 6. Testing
