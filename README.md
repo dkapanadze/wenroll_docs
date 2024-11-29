@@ -689,19 +689,14 @@ query allModules(
     perPage: $perPage, 
     fetchAll: $fetchAll
   ) {
-    items {
-      id
-      name
-      description
-      orderIndex
-    }
-    totalCount
-    currentPage
-    totalPages
+   currentPage,
+  totalPages, 
+  totalCount,
+  data: [Module]
   }
 }
 ```
-| **Status Code** | **Error Message**             | **Description**                                                   |
+| **Status Code** | **Message**             | **Description**                                                   |
 |------------------|-------------------------------|-------------------------------------------------------------------|
 | **200**          | `Success`                    | The modules were successfully retrieved.                         |
 | **400**          | `Bad Request`                | Invalid input or an error occurred while processing the query.   |
@@ -722,14 +717,11 @@ Description: This endpoint allows adding one or more modules to a specific cours
 ```graphql
 mutation addModulesToCourse($courseData: CourseData!, $moduleIds: [String!]!) {
   addModulesToCourse(courseData: $courseData, moduleIds: $moduleIds) {
-    id
-    name
-    description
-    orderIndex
+Module
   }
 }
 ```
-| **Status Code** | **Error Message**             | **Description**                                                   |
+| **Status Code** | **Message**             | **Description**                                                   |
 |------------------|-------------------------------|-------------------------------------------------------------------|
 | **200**          | `Success`                    | The modules were successfully added to the course.               |
 | **400**          | `Bad Request`                | Invalid course data or module IDs provided.                      |
@@ -740,7 +732,7 @@ mutation addModulesToCourse($courseData: CourseData!, $moduleIds: [String!]!) {
 
 ### Subscriptions Module
 
-### Mutation: createSubscription(input: CreateSubscriptionInput!): Subscriptions
+### `Mutation: createSubscription(input: CreateSubscriptionInput!): Subscriptions`
 
 **Description**: This endpoint allows a user to create a new subscription. It validates whether the user already has an active subscription, checks if the requested subscription product exists, and then creates the subscription. If the user already has a subscription, an error will be returned.
 
@@ -759,11 +751,7 @@ mutation addModulesToCourse($courseData: CourseData!, $moduleIds: [String!]!) {
 ```graphql
 mutation createSubscription($input: CreateSubscriptionInput!) {
   createSubscription(input: $input) {
-    id
-    productId
-    userId
-    status
-    createdAt
+  Subscriptions
   }
 }
 ```
