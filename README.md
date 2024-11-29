@@ -9,7 +9,7 @@ The application uses the following technologies:
 - **NestJS**: A framework for building scalable server-side applications.
 - **GraphQL**: For flexible and efficient data queries and mutations.
 - **PostgreSQL**: For data storage.
-- **Apollo Server**: For implementing the GraphQL API.
+
 ### 3. Application Architecture
 The application follows a three-tier architecture:
 - **Presentation Layer**: React Native handles the user interface and client-side logic.
@@ -808,9 +808,9 @@ mutation activateAdminSubscription($subscriptionId: String!, $orderId: String!) 
 }
 ```
 
-#### **Error Codes**
 
-| **Status Code** | **Error Message**                | **Description**                                                    |
+
+| **Status Code** | **Message**                | **Description**                                                    |
 |------------------|----------------------------------|--------------------------------------------------------------------|
 | **200**          | `Success`                       | The request was successful, and the subscription was activated.    |
 | **400**          | `Subscription not found`        | The provided subscription ID does not exist or is inactive.       |
@@ -874,9 +874,9 @@ mutation updateSubscriptionNextPaymentDate($userId: String!, $subscriptionId: St
 }
 ```
 
-#### **Error Codes**
 
-| **Status Code** | **Error Message**                  | **Description**                                                   |
+
+| **Status Code** | **Message**                  | **Description**                                                   |
 |------------------|------------------------------------|-------------------------------------------------------------------|
 | **200**          | `Success`                         | The subscription's next payment date was successfully updated.    |
 | **400**          | `Bad Request`                     | The request contains invalid parameters, or the subscription update failed. |
@@ -919,9 +919,9 @@ query getActiveSubscriptions {
 
 ```
 
-#### Error Codes
 
-| **Status Code** | **Error Message**            | **Description**                                                   |
+
+| **Status Code** | **Message**            | **Description**                                                   |
 |------------------|------------------------------|-------------------------------------------------------------------|
 | **200**          | `Success`                |The request was successful, and the active subscriptions were retrieved.. |
 | **400**          | `Bad Request`                | The request could not be processed due to invalid parameters or a problem retrieving active subscriptions. |
