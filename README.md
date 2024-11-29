@@ -1070,16 +1070,7 @@ mutation sendSubscriptionPaymentDetails($userId: String!, $subscriptionId: Strin
 ```
 mutation createSubscriptionTransaction($input: CreateTransactionInput!) {
   createSubscriptionTransaction(input: $input) {
-    orderId
-    userId
-    status
-    transactionId
-    amount
-    paymentMethod
-    cardType
-    statusDescription
-    subscriptionId
-    transactionType
+  Transaction
   }
 }
 ```
