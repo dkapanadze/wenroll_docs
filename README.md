@@ -110,7 +110,7 @@ Ensure the PostgreSQL database is running and the connection parameters are corr
 Description: This endpoint allows the creation of a new user by providing necessary information like email, password, first name, and lastname. It registers the user and sends an invitation email with a temporary password. 
 
 #### Request Body 
-```
+```graphql
  mutation createUser($input: SignUpInput!){
 	 createUser(input: $input){
 		...UserFragment 
@@ -143,7 +143,7 @@ Description This route enables users to log in by providing their email and pass
 - **Updates the user's last login date upon successful login.**
 - **Ensures secure password handling and token generation.**
 #### Request Body 
-```
+```graphql
  auth($input: LoginInput!) {
         auth(input: $input) { 
 	accessToken 
@@ -172,7 +172,7 @@ Description: This endpoint allows a user to authenticate using Apple’s identit
 
 #### Request Body 
 
-```
+```graphql
 appleAuth($input: AppleAuth!) {
  appleAuth(input: $input) {
  	accessToken 
@@ -199,7 +199,7 @@ Description: This endpoint handles user authentication via Google. It validates 
 
 #### Request Body 
 
-```
+```graphql
 googleAuth($input: GoogleAuthInput!) {
 	 googleAuth(input: $input) { 
 		accessToken
@@ -232,7 +232,7 @@ Description: This endpoint fetches users based on their role within the system. 
 
 #### Request Body
 
-``` 
+``` graphql
 userWithNotes { 
 	…userFragment
  }
@@ -261,7 +261,7 @@ number of users per page. If fetchAll is set to true, it retrieves up to 1000 us
 
 #### Request Body
 
-```
+```graphql
   usersByRole($role: String!, $filter: UserFilter, $fetchAll: Boolean, $currentPage: Int, $perPage: Int) {
 	 usersByRole(role: $role, filter: $filter, fetchAll: $fetchAll, currentPage: $currentPage, perPage: $perPage) {
 	 currentPage
@@ -296,7 +296,7 @@ Description: This endpoint allows the retrieval of users based on their role wit
 
 #### Request Body
 
-```
+```graphql
 query usersByRole($role: String!, $filter: UserFilter, $fetchAll: Boolean, $currentPage: Int, $perPage: Int) { 
  	usersByRole(role: $role, filter: $filter, fetchAll: $fetchAll, currentPage: $currentPage, perPage: $perPage) { 
 	currentPage 
@@ -332,7 +332,7 @@ Description: This endpoint allows updating a user's profile. It accepts a user I
 
 #### Request Body
 
-```
+```graphql
 updateUser($id: String!, $input: UserInput!, $avatar: Upload) { 
  updateUser(id: $id, input: $input, avatar: $avatar) {
 …userFragment 
@@ -359,7 +359,8 @@ Description: This endpoint allows managing categories for a student. Categories 
 - **Role-Based Access Control: Protected by GqlAuthGuard to ensure only authorized users can make updates.**
 - **Error Handling: Ensures that invalid inputs or internal errors are properly addressed and logged.**
 #### Reqsuest Body
-```
+
+```graphql
 addOrDeleteCategoryForStudent($ids: [String]!) {
  addOrDeleteCategoryForStudent(ids: $ids)
  }
@@ -374,6 +375,7 @@ addOrDeleteCategoryForStudent($ids: [String]!) {
 
 
 - **Query getUserCategories: [Category]**
+
 Description: This endpoint retrieves all categories associated with the currently authenticated user. It is protected by authentication guards to ensure only authorized users can access their category data.
 
 #### Feature
@@ -382,7 +384,7 @@ Description: This endpoint retrieves all categories associated with the currentl
 - **Efficient Retrieval: Queries the database to fetch the user's associated categories.**
 
 #### Request Body
-```
+```graphql
 getUserCategories { 
 	getUserCategories 
 		{
@@ -416,7 +418,7 @@ Description: endpoint allows creating a new course in the system. It supports ad
 - **Rich Text Description: Initializes an editor-compatible rich text description for the course.**
 - **Validation and Authorization: Includes validation for input fields and role-based authorization (SUPER_ADMIN and ADMIN roles only)**
 
-```
+```graphql
 mutation createCourse($input: CourseInput!, $groupIds: [String!]) {
   createCourse(input: $input, groupIds: $groupIds) {
     id
@@ -473,7 +475,7 @@ Description: This endpoint allows editing an existing course in the system. It s
 - **Restricted to users with roles SUPER_ADMIN and ADMIN.**
 - **Error Handling: Handles scenarios where the course does not exist or invalid data is provided.**
 
-```
+```graphql
 mutation editCourse($id: String!, $input: CourseInput, $groupIds: [String!]) {
   editCourse(id: $id, input: $input, groupIds: $groupIds) {
     id
