@@ -836,10 +836,7 @@ mutation activateAdminSubscription($subscriptionId: String!, $orderId: String!) 
 ```graphql
 mutation cancelSubscription($id: String!) {
   cancelSubscription(id: $id) {
-    id
-    status
-    canceledAt
-    cardToken
+   Subscriptions
   }
 }
 
