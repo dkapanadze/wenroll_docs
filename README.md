@@ -776,7 +776,7 @@ mutation createSubscription($input: CreateSubscriptionInput!) {
 | **400**          | `Subscription product not found`      | The provided subscription product ID does not exist.             |
 | **500**          | `Internal Server Error`               | An unexpected error occurred while creating the subscription.     |
 
-### Mutation: `activateAdminSubscription(subscriptionId: String!, orderId: String!)`
+### Mutation: `activateAdminSubscription(subscriptionId: String!, orderId: String!):Subscriptions`
 
 #### **Description**:
 This endpoint allows administrators (with `SUPER_ADMIN` or `ADMIN` roles) to activate a subscription. It validates the subscription and product, calculates the appropriate payment dates, and updates the subscription status to `SUBSCRIBED`.
@@ -797,13 +797,7 @@ This endpoint allows administrators (with `SUPER_ADMIN` or `ADMIN` roles) to act
 ```graphql
 mutation activateAdminSubscription($subscriptionId: String!, $orderId: String!) {
   activateAdminSubscription(subscriptionId: $subscriptionId, orderId: $orderId) {
-    id
-    userId
-    productId
-    status
-    lastPaymentDate
-    nextPaymentDate
-    paymentCount
+ Subscriptions
   }
 }
 ```
