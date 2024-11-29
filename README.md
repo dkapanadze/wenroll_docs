@@ -865,11 +865,7 @@ mutation cancelSubscription($id: String!) {
 ```graphql
 mutation updateSubscriptionNextPaymentDate($userId: String!, $subscriptionId: String!) {
   updateSubscriptionNextPaymentDate(userId: $userId, subscriptionId: $subscriptionId) {
-    id
-    status
-    nextPaymentDate
-    lastPaymentDate
-    paymentCount
+   Subscriptions
   }
 }
 ```
