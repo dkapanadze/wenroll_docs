@@ -558,8 +558,8 @@ Description: This endpoint allows a user to enroll in a free course, provided th
 
 #### Request Body
 
- ```
-graphql mutation purchaseFreeCourse($courseId: String!) {             
+ ```graphql
+ mutation purchaseFreeCourse($courseId: String!) {             
     purchaseFreeCourse(courseId: $courseId) {
    status 
     }
@@ -592,7 +592,7 @@ Description: Tracks the user's progress for a specific lesson within a course. T
 
 #### Request Body
 
-```
+```graphql
 trackProgress($courseId: String!, $lessonId: String!, $duration: Float!) {   
         trackProgress(courseId: $courseId, lessonId: $lessonId, duration: $duration) 
 }
