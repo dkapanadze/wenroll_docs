@@ -107,7 +107,7 @@ Ensure the PostgreSQL database is running and the connection parameters are corr
 
  ### *Auth Module*
 - **Mutation createUser(input: SignUpInput): User**
-Description: This endpoint allows the creation of a new user by providing necessary information like email, password, first name, and lastname. It registers the user and sends an invitation email with a temporary password. 
+Description: Registers a new normal user (student role) in the system. If a password is not provided, a temporary one is generated. The user will receive an invitation email with a link to reset their password.
 
 #### Request Body 
 ```graphql
@@ -136,7 +136,7 @@ Description: This endpoint allows the creation of a new user by providing necess
 
 -  **Mutation auth(input: LoginInput): AuthPayload**
 
-Description This route enables users to log in by providing their email and password. Upon successful authentication, the system generates an access token and returns it along with user details. The access token can be used for subsequent authenticated requests.
+Description: This route enables users to log in by providing their email . Upon successful authentication, the system generates an access token and returns it along with user details. The access token can be used for subsequent authenticated requests.
  #### Features
 - **Validates the user's email and password credentials.**
 - **Supports account suspension checks and handles login restrictions for non-active users.**
@@ -547,7 +547,7 @@ mutation coursePublished($courseId: [String!]!, $action: String!) {
 
 
 
--  **Mutation: purchaseFreeCourse(courseId: String): SuccessPurchase **
+-  **Mutation: purchaseFreeCourse(courseId: String): SuccessPurchase**
 
 Description: This endpoint allows a user to enroll in a free course, provided they have an active subscription. It validates the user's subscription and adds the user to the course. 
 
@@ -1386,7 +1386,7 @@ This endpoint updates the status of a video's conversion once the conversion pro
 | **200**          | `Success`             |<video.key> |
 | **400**          | `Video not found`         |The video specified by videoKey could not be found.|
 
-#### REST Endpoint: ` POST videos/check-video-conversion-status`
+#### REST Endpoint: `POST videos/check-video-conversion-status`
 
 #### Description
 This endpoint checks the conversion status of a video by its link. It verifies whether all associated video links have been converted successfully. If the video is not found, it returns an error message.
@@ -1450,7 +1450,7 @@ location: String
 progress: Int 
 phoneFields: PhoneFields 
 education: [Education]
- experience: [Experience] 
+experience: [Experience] 
 averageRating: Int 
 sharedCourses: [Course]
 notes: [Note] 
@@ -1462,6 +1462,31 @@ mobileNumberVerified: Boolean
  mobileNumber: String
  }
 ```
+
+#### Type Education
+```
+{
+  id: String
+  userId: String
+  onGoing: Boolean
+  title: String
+  position: String
+  date: String
+}
+```
+
+#### Type Experience
+```
+ Experience {
+  id: String
+  userId: String
+  onGoing: Boolean
+  title: String
+  position: String
+  date: String
+}
+```
+
 #### Type SignUpInput
 
 ```
@@ -1710,5 +1735,22 @@ index: Int
   cardToken: String
   canceledAt: Date
   version: Boolean
+}
+```
+
+### SubscriptionProduct
+```
+{
+  id: String
+  price: Float
+  currency: Currency
+  occuarenceType: OccuarenceType
+  occurrenceNumber: Int
+  status: String
+  createDate: DateTime
+  updateDate: DateTime
+  deleteDate: DateTime
+  subscriptions: [Subscriptions]
+  activePromo: String
 }
 ```
