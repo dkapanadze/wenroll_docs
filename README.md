@@ -908,12 +908,7 @@ mutation updateSubscriptionNextPaymentDate($userId: String!, $subscriptionId: St
 ```graphql
 query getActiveSubscriptions {
   getActiveSubscriptions {
-    id
-    userId
-    productId
-    status
-    nextPaymentDate
-    createdAt
+   Subscriptions
   }
 }
 
