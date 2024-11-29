@@ -1404,30 +1404,14 @@ This endpoint checks the conversion status of a video by its link. It verifies w
 | **200**          | `Success`             | <Boolean> |
 | **400**          | `Video not found`         |The video specified by videoKey could not be found.|
 
-6. Testing
-### Unit Tests
-Run unit tests for the back-end:
-```bash
-npm run test
-```
-### End-to-End Tests
-Run E2E tests for the front-end:
-```bash
-npm run e2e
-```
-7. Deployment
-Deploy the application using Docker:
-```bash
-docker-compose up --build
-```
-Ensure the necessary environment variables are configured for production.
+
 ### 8. Glossary
  
- #### User
+ #### Type User
 
 ```
 {
- id: ID! 
+id: ID! 
 email: String 
 firstName: String 
 lastName: String
@@ -1480,7 +1464,7 @@ mobileNumberVerified: Boolean
  mobileNumber: String
  }
 ```
-#### SignUpInput
+#### Type SignUpInput
 
 ```
 { 
@@ -1491,7 +1475,7 @@ lastName: string
 }
 ```
 
-#### LoginInput 
+#### Type LoginInput 
 ````
 { 
 email: String! 
@@ -1502,7 +1486,7 @@ deviceType: String
 ````
 
 
-#### AppleAuth 
+#### Type AppleAuth 
 ````
  {
  authorizationCode: String 
@@ -1514,7 +1498,7 @@ deviceType: String
 }
 ````
 
-#### GoogleAuthInput 
+#### Type GoogleAuthInput 
 ````
 {
  idToken: String! 
@@ -1525,7 +1509,7 @@ deviceId: String
 }
 ````
 
-#### FetchUsersResponse
+####  Type FetchUsersResponse
 ```
 {
 currentPage: Int 
@@ -1535,7 +1519,7 @@ data: [User]
 }
 ```
 
-#### UserFilter 
+#### Type UserFilter 
 ```
  {
  firstName: FilterableField 
@@ -1550,7 +1534,7 @@ location: FilterableField
 ```
 
 
-#### FilterableField 
+#### Type FilterableField 
 ```
 {
 type: string 
@@ -1559,7 +1543,7 @@ fields?: string[]
 }
 ```
 
-#### FilterableFieldArray
+#### Type FilterableFieldArray
 
 ```
 {
@@ -1567,7 +1551,7 @@ type: string
 value: string | [string] 
 }
 ```
-#### Course
+#### Type Course
 
 ```
 {
