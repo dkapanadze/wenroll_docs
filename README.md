@@ -126,7 +126,7 @@ Description: This endpoint allows the creation of a new user by providing necess
 - **Secure Token Generation: A reset token is generated and used in the invitation email to allow the user to reset their password securely**
  
 
-| **Status Code** | **Error Message** | **Description** | 
+| **Status Code** | **Message** | **Description** | 
 |------------------|---------------------|----------------------------------------------------------------|
 | **200** | `Success` | User created succesfully. |  
 | **400** | `Bad Request` | The request was malformed or missing required parameters. | 
@@ -152,7 +152,7 @@ Description This route enables users to log in by providing their email and pass
 }
  ```
 
-| **Status Code** | **Error Message** | **Description** | 
+| **Status Code** | **Message** | **Description** | 
 |------------------|---------------------|----------------------------------------------------------------| 
 | **200** | `Success` | The request was succesfuul, user is loged in the system. | 
 | **400** | `Bad Request` | The request was malformed or missing required parameters. | 
@@ -179,7 +179,7 @@ appleAuth($input: AppleAuth!) {
 	…UserFragment
  }
  ```
-| **Status Code** | **Error Message** | **Description** | 
+| **Status Code** | **Message** | **Description** | 
 |------------------|---------------------|----------------------------------------------------------------| 
 | **200** | `Success` | Request was successful, user is regsitered and redirected into system.| 
 | **401** | `Unauthorized` | User email and token are not for the same account| 
@@ -208,7 +208,7 @@ googleAuth($input: GoogleAuthInput!) {
  }
 ```
 
-| **Status Code** | **Error Message** | **Description** | 
+| **Status Code** | **Message** | **Description** | 
 |------------------|---------------------|----------------------------------------------------------------|
 | **200** | `Success` | Request was successful, user is regsitered and redirected into system.| 
 | **400** | `error verifying google idToken email:<user.email>` |The Google ID token could not be verified.| 
@@ -237,7 +237,7 @@ userWithNotes {
 	…userFragment
  }
 ```
-| **Status Code** | **Error Message** | **Description** | 
+| **Status Code** | **Message** | **Description** | 
 |------------------|---------------------|----------------------------------------------------------------| 
 | **202** | `success` | The request was successful, and the users are returned. |
 | **400**          | `Bad Request`         | The request parameters were invalid (e.g., missing required fields or invalid role). |
@@ -274,7 +274,7 @@ number of users per page. If fetchAll is set to true, it retrieves up to 1000 us
  }
 ```
 
-| **Status Code** | **Error Message** | **Description** | 
+| **Status Code** | **Message** | **Description** | 
 |------------------|---------------------|----------------------------------------------------------------| 
 | **202** | `success` |The request was successful, and the users are returned.| 
 | **400** | `Bad Request` |The request parameters were invalid (e.g., missing required fields or invalid role).| 
@@ -309,7 +309,7 @@ query usersByRole($role: String!, $filter: UserFilter, $fetchAll: Boolean, $curr
  }
 ```
 
-| **Status Code** | **Error Message**       | **Description**                                                     |
+| **Status Code** | **Message**       | **Description**                                                     |
 |------------------|-------------------------|---------------------------------------------------------------------|
 | **202** | `success` | The request was successful, and the users are returned. |
 | **400**          | `Bad Request`         | The request parameters were invalid (e.g., missing required fields or invalid role). |
@@ -341,7 +341,7 @@ updateUser($id: String!, $input: UserInput!, $avatar: Upload) {
 ```
 
 
-| **Status Code** | **Error Message**       | **Description**                                                     |
+| **Status Code** | **Message**       | **Description**                                                     |
 |------------------|-------------------------|---------------------------------------------------------------------|
 | **200** | `Success` | The request was successful, and the user profile was updated. | | **400** | `Bad Request` | The request parameters were invalid (e.g., missing required fields or invalid data). |
 | **401** | `Unauthorized` | The user does not have permission to update this profile. | 
@@ -365,7 +365,7 @@ addOrDeleteCategoryForStudent($ids: [String]!) {
  }
 ```
 
-| **Status Code** | **Error Message**           | **Description**                                                     |
+| **Status Code** | **Message**           | **Description**                                                     |
 |------------------|-----------------------------|---------------------------------------------------------------------|
 | **200**          | `Success`                  | The request was successful, and the categories were updated.       |
 | **400**          | `Bad Request`              | Invalid or missing request parameters.                             |
@@ -393,7 +393,7 @@ getUserCategories {
 }
 ```
 
-| **Status Code** | **Error Message**       | **Description**                                                     |
+| **Status Code** | **Message**       | **Description**                                                     |
 |------------------|-------------------------|---------------------------------------------------------------------|
 | **200** | `Success` | The request was successful, and the categories were retrieved. | |**401** | `Unauthorized` | The user is not authenticated or lacks the necessary permissions. | 
 | **500** | `Internal Server Error` | An unexpected error occurred while processing the request. |
@@ -445,7 +445,7 @@ mutation createCourse($input: CourseInput!, $groupIds: [String!]) {
 
 ```
 
-| **Status Code** | **Error Message**       | **Description**                                                     |
+| **Status Code** | **Message**       | **Description**                                                     |
 |------------------|-------------------------|---------------------------------------------------------------------|
 | **201**          | `Success`                    | The course was created successfully.                               |
 | **400**          | `Default group is required`  | The default group for the course is missing.                       |
@@ -502,7 +502,7 @@ mutation editCourse($id: String!, $input: CourseInput, $groupIds: [String!]) {
 
 ```
 
-| **Status Code** | **Error Message**       | **Description**                                                     |
+| **Status Code** | **Message**       | **Description**                                                     |
 |------------------|-------------------------|---------------------------------------------------------------------|
 | **200**          | `Success`              | The course was successfully updated.                               |
 | **400**          | `Bad Request`          | Invalid or missing fields in the input payload.                    |
@@ -539,7 +539,7 @@ mutation coursePublished($courseId: [String!]!, $action: String!) {
     updatedAt
   }
 ```
-| **Status Code** | **Error Message**       | **Description**                                                     |
+| **Status Code** | **Message**       | **Description**                                                     |
 |------------------|-------------------------|---------------------------------------------------------------------|
 | **200**          | `Success`              | The course publication state was successfully updated.             |
 | **400**          | `Bad Request`          | Invalid or missing fields in the input payload.                    |
@@ -570,7 +570,7 @@ graphql mutation purchaseFreeCourse($courseId: String!) {
  
 ```
 
-| **Status Code** | **Error Message**       | **Description**                                                     |
+| **Status Code** | **Message**       | **Description**                                                     |
 |------------------|-------------------------|---------------------------------------------------------------------|
 | **200** | `Success` | The course was successfully added to the user's profile. |
 | **400** | `Bad Request` | The user does not have an active subscription or other invalid input. |
@@ -617,7 +617,7 @@ trackProgress($courseId: String!, $lessonId: String!, $duration: Float!) {
    - Logs any errors that occur during the creation or update of progress records.
    - Returns appropriate error messages for invalid input or internal server issues.
 
-| **Status Code** | **Error Message**            | **Description**                                                         |
+| **Status Code** | **Message**            | **Description**                                                         |
 |------------------|------------------------------|-------------------------------------------------------------------------|
 | **200**          | `Success`                   | The progress was successfully tracked.                                 |
 | **400**          | `Bad Request`               | Invalid input, such as missing or invalid course/lesson IDs or duration. |
@@ -656,7 +656,7 @@ mutation addModule($input: ModuleInput!, $courseData: CourseData!) {
 
 #### Status Codes and Error Messages
 
-| **Status Code** | **Error Message**                | **Description**                                                   |
+| **Status Code** | **Message**                | **Description**                                                   |
 |------------------|----------------------------------|-------------------------------------------------------------------|
 | **200**          | `Success`                       | The request was successful, and the module was created successfully. |
 | **400**          | `Bad Request`                   | The request contains invalid or missing fields in the input.      |
@@ -757,7 +757,7 @@ mutation createSubscription($input: CreateSubscriptionInput!) {
 ```
 #### Status Codes and Error Messages
 
-| **Status Code** | **Error Message**                     | **Description**                                                   |
+| **Status Code** | **Message**                     | **Description**                                                   |
 |------------------|---------------------------------------|-------------------------------------------------------------------|
 | **200**          | `Success`                             | The subscription was successfully created.                        |
 | **400**          | `User already has active subscription`| The user already has an active or on-hold subscription.           |
@@ -943,7 +943,7 @@ This endpoint handles the subscription process for users. It validates the subsc
 ### Error Handling:
 - Returns appropriate errors for invalid products, active subscriptions, authentication failures, or order processing issues.
 
-| **Status Code** | **Error Message**                  | **Description**                                               |
+| **Status Code** | **Message**                  | **Description**                                               |
 |------------------|------------------------------------|---------------------------------------------------------------|
 | **200**          | `Success`                          | The subscription was successfully processed.                  |
 | **400**          | `Subscription Product Not Found`   | The provided product ID does not exist.                       |
@@ -982,7 +982,7 @@ This endpoint handles the payment status process for users. It retrieves the ord
 ### Error Handling:
 - Returns appropriate errors for invalid orders, active subscriptions, or payment failures.
 
-| **Status Code** | **Error Message**                  | **Description**                                               |
+| **Status Code** | **Message**                  | **Description**                                               |
 |------------------|------------------------------------|---------------------------------------------------------------|
 | **200**          | `payment failed`                   | The payment failed, and the subscription remains in pending state. |
 | **200**          | `subscription canceled`            | The subscription was canceled due to payment failure.         |
