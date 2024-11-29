@@ -1107,18 +1107,10 @@ This query retrieves a list of transactions, with pagination support. You can sp
 ```graphql
 query getTransactions($currentPage: Int!, $perPage: Int!, $fetchAll: Boolean!) {
   getTransactions(currentPage: $currentPage, perPage: $perPage, fetchAll: $fetchAll) {
-    items {
-      orderId
-      userId
-      status
-      transactionId
-      amount
-      paymentMethod
-      statusDescription
-      subscriptionId
-      transactionType
-    }
-    totalCount
+ currentPage,
+  totalPages,
+  totalCount,
+  data: [Transaction]
   }
 }
 ```
