@@ -512,6 +512,7 @@ mutation editCourse($id: String!, $input: CourseInput, $groupIds: [String!]) {
 
 
 - **Mutation: coursePublished(courseId: [String], action: String): [Course]**
+
 Description: This mutation toggles the publication state of a course. A course can be either published or unpublished, and its state is updated accordingly. 
 
 
@@ -531,12 +532,7 @@ Description: This mutation toggles the publication state of a course. A course c
 ```graphql
 mutation coursePublished($courseId: [String!]!, $action: String!) {
   coursePublished(courseId: $courseId, action: $action) {
-    id
-    title
-    isPublished
-    state
-    index
-    updatedAt
+  Course
   }
 ```
 | **Status Code** | **Message**       | **Description**                                                     |
@@ -1571,5 +1567,146 @@ contentLocked: Boolean
 needDefaultGroup: Boolean
 defaultGroupAdmin: String
 index: Int
+}
+```
+
+#### Type Lesson
+```
+{
+  id: String
+  _id: String
+  name: String
+  duration: Float
+  video: Videos
+  transcript: String
+  createDate: DateTime
+  description: String
+  attachment: Attachment
+  audio: AudioFile
+  contentDocument: Attachment
+  transcriptFile: Attachment
+  topicName: String
+  topicId: String
+  subtitle: Attachment
+  numberOfModuleQuestions: Float
+  progress: Int
+  watchDuration: Int
+  blocked: Boolean
+  moduleName: String
+  moduleId: String
+  courseId: String
+  courseName: String
+  quizzes: [Quiz]
+  isFavorited: Boolean
+  companyId: String
+  pdfLessonDuration: Int
+  isLocked: Boolean
+  courseCover: String
+  coaches: [String]
+  videoLink: Videos
+}
+```
+
+
+#### Type Topic
+```
+{
+  id: String
+  name: String
+  description: String
+  editorText: String
+  attachment: Attachment
+  module: String
+  lessons: [Lesson]
+  blocked: Boolean
+  numberOfModuleQuestions: Float
+  currentModule: Modules
+  quizzes: [Quiz]
+  companyId: String
+}
+```
+
+#### Type Module
+```
+{
+  id: String!
+  orderIndex: Int!
+  name: String!
+  description: String
+  editorText: String
+  courses: [AssignedCourse]
+  topics: [Topic]
+  coverImage: Attachment
+  video: Videos
+  duration: Float
+  attachment: Attachment
+  certificateImage: Attachment
+  createdBy: ObjectId
+  modifiedBy: ObjectId
+  createDate: String
+  modifiedDate: DateTime
+  deletedDate: DateTime
+  status: String
+  numberOfQuestions: Float
+  numberOfTopics: Int
+  numberOfLessons: Int
+  numberOfFlashCards: Int
+  subtitle: Attachment
+  progress: Int
+  blocked: Boolean
+  quizList: [Quiz]
+  createdTopic: Topic
+  companyId: String
+  skillTestVideoEnabled: Boolean
+  isLocked: Boolean
+}
+```
+### Type Transaction
+```
+{
+  id: ID!
+  userId: String
+  orderId: String
+  amount: Float
+  status: String
+  preAuthStatus: String
+  iPayPaymentId: String
+  statusDescription: String
+  shopOrderId: String
+  paymentMethod: String
+  cardType: String
+  pan: String
+  transactionId: String
+  userFullName: String
+  courseId: String
+  userEmail: String
+  course: Course
+  subscriptionProduct: SubscriptionProduct
+  createDate: Date
+  subscriptionId: String
+  paymentType: String
+  hashedPaymentInfo: String
+}
+```
+
+### Type Subscriptions
+```
+{
+  id: String
+  lastPaymentDate: String
+  nextPaymentDate: String
+  productId: SubscriptionProduct
+  product: SubscriptionProduct
+  status: SubscriptionStatuses
+  createDate: Date
+  updateDate: Date
+  deleteDate: Date
+  userId: User
+  transactions: [Transaction]
+
+  paymentCount: Int
+  cardToken: String
+  canceledAt: Date
+  version: Boolean
 }
 ```
